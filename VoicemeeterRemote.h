@@ -596,13 +596,12 @@ extern "C"
 
 	enum VBVMR_AUDIOCALLBACK
 	{
-
 		// to process input insert
-		IN = 0x00000001,
+		INPUT=0x00000001,
 		// to process output bus insert
-		OUT = 0x00000002,
+		OUTPUT=0x00000002,
 		// to receive all i/o
-		MAIN = 0x00000004,
+		MAIN=0x00000004,
 	};
 
 	/**
