@@ -344,7 +344,7 @@ extern "C"
 	/** @name Device Enumeration Functions
 	 * @{ */
 
-	enum VbvmrDevType
+	enum VBVMR_DEVTYPE
 	{
 		MME = 1,
 		WDM = 3,
@@ -441,17 +441,27 @@ extern "C"
 
 	typedef long(__stdcall *T_VBVMR_VBAUDIOCALLBACK)(void *lpUser, long nCommand, void *lpData, long nnn);
 
-#define VBVMR_CBCOMMAND_STARTING 1 // command to initialize data according SR and buffer size
-								   // info = (VBVMR_LPT_AUDIOINFO)lpData
+	enum VBVMR_CBCOMMAND
+	{
 
-#define VBVMR_CBCOMMAND_ENDING 2 // command to release data
-#define VBVMR_CBCOMMAND_CHANGE 3 // If change in audio stream, you will have to restart audio
+		// command to initialize data according SR and buffer size
+		// info = (VBVMR_LPT_AUDIOINFO)lpData
+		STARTING = 1,
 
-#define VBVMR_CBCOMMAND_BUFFER_IN 10   // input insert
-#define VBVMR_CBCOMMAND_BUFFER_OUT 11  // bus output insert
-#define VBVMR_CBCOMMAND_BUFFER_MAIN 20 // all i/o
-									   // audiobuffer = (VBVMR_LPT_AUDIOBUFFER)lpData
-									   // nnn = synchro = 1 if synchro with Voicemeeter
+		// command to release data
+		ENDING = 2,
+		// If change in audio stream, you will have to restart audio
+		CHANGE = 3,
+
+		// input insert
+		BUFFER_IN = 10,
+		// bus output insert
+		BUFFER_OUT = 11,
+		// all i/o
+		// audiobuffer = (VBVMR_LPT_AUDIOBUFFER)lpData
+		// nnn = synchro = 1 if synchro with Voicemeeter
+		BUFFER_MAIN = 20,
+	};
 
 	/*
 	 -----------------------------------------------------
@@ -584,9 +594,16 @@ extern "C"
 
 	long __stdcall VBVMR_AudioCallbackRegister(long mode, T_VBVMR_VBAUDIOCALLBACK pCallback, void *lpUser, char szClientName[64]);
 
-#define VBVMR_AUDIOCALLBACK_IN 0x00000001	// to process input insert
-#define VBVMR_AUDIOCALLBACK_OUT 0x00000002	// to process output bus insert
-#define VBVMR_AUDIOCALLBACK_MAIN 0x00000004 // to receive all i/o
+	enum VBVMR_AUDIOCALLBACK
+	{
+
+		// to process input insert
+		IN = 0x00000001,
+		// to process output bus insert
+		OUT = 0x00000002,
+		// to receive all i/o
+		MAIN = 0x00000004,
+	};
 
 	/**
 	@brief	Start / Stop Audio processing
@@ -663,9 +680,14 @@ extern "C"
 
 	long __stdcall VBVMR_MacroButton_SetStatus(long nuLogicalButton, float fValue, long bitmode);
 
-#define VBVMR_MACROBUTTON_MODE_DEFAULT 0x00000000	// PUSH or RELEASE button
-#define VBVMR_MACROBUTTON_MODE_STATEONLY 0x00000002 // change Displayed State only
-#define VBVMR_MACROBUTTON_MODE_TRIGGER 0x00000003	// change Trigger State
+enum VBVMR_MACROBUTTON_MODE {
+	// PUSH or RELEASE button
+DEFAULT=0x00000000,
+ // change Displayed State only
+STATEONLY=0x00000002,
+	// change Trigger State
+TRIGGER=0x00000003,
+};
 
 	/** @}  */
 
@@ -793,7 +815,7 @@ extern "C"
 
 #pragma pack()
 
-	enum VmrtStateMode
+	enum VMRTSTATE_MODE
 	{
 		MUTE = 0x00000001,
 		SOLO = 0x00000002,
